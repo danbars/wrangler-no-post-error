@@ -1,0 +1,28 @@
+{
+  "name": "formdata-cloudflare-tasks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "wrangler publish",
+    "build": "wrangler build",
+    "serve": "wrangler dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danbars/formdata-cloudflare-tasks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danbars/formdata-cloudflare-tasks/issues"
+  },
+  "homepage": "https://github.com/danbars/formdata-cloudflare-tasks#readme",
+  "dependencies": {
+    "cloudworker-proxy": "^1.16.1"
+  },
+  "devDependencies": {
+    "@cloudflare/wrangler": "^1.16.0"
+  }
+}
