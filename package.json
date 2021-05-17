@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/danbars/formdata-cloudflare-tasks#readme",
   "dependencies": {
-    "cloudworker-proxy": "^1.16.1"
+    "cloudworker-proxy": "^1.16.1",
+    "html-to-text": "^7.1.1"
   },
   "devDependencies": {
     "@cloudflare/wrangler": "^1.16.0"

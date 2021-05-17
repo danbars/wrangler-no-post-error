@@ -1,0 +1,6 @@
+name = "tasks"
+type = "webpack"
+account_id = "c4a44021bc47f9a2fa9f08bf99d81710"
+workers_dev = false
+route = "https://tasks.form-data.com/*"
+zone_id = "f6b7f90ec46bb15c41195b5fe68f6e15"

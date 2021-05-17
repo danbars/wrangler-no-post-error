@@ -2,12 +2,12 @@
  * This the entrypoint for the cloudflare workers
  */
 
-// import { handler } from './handler';
+import { handler } from './handler';
 
 async function fetchAndApply(event) {
   try {
-    // return await handler(event);
-    return new Response("hello world");
+    return await handler(event);
+    // return new Response("hello world");
   } catch (err) {
     console.log('Global catch caught', err);
     // eslint-disable-next-line no-undef
