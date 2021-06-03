@@ -10,7 +10,17 @@ export function emailTasks ({ }) {
             // console.log('headers', JSON.stringify(req.headers));
             const t = await req.text();
             console.log('body is', t);
-            const task = JSON.parse(t);
+            const tt = JSON.parse(t);
+            console.log('t is parsed. tt keys=', Object.keys(tt));
+            if (!tt.requestOptions && !tt.requestOptions.body) {
+                console.error('bad request body. can\'t parse task', JSON.stringify(tt));
+                ctx.status = 200; // we return 200 so Google task will not dispatch this bad task again
+                ctx.body = JSON.stringify({status: "bad request body"})
+                return;
+            }
+            const task = JSON.parse(tt.requestOptions.body);
+            console.log('task is parsed');
+
             //const task = await req.json();
             //validations
             //TODO: use this also in task handler "kGGUHpWlBN1L64AVxAG4qAsZAkaLC3oHr6l2XIvU"
@@ -18,18 +28,19 @@ export function emailTasks ({ }) {
                 console.error('Bad authorization header. Got ', req.headers.authorization);
                 ctx.status = 200; // we return 200 so Google task will not dispatch this bad task again
                 ctx.body = JSON.stringify({status: "bad authorization"})
-                return
+                return;
             }
-            if (task.task !== 'email' ||
-                !task.from ||
+            if (!task.from ||
                 !task.to ||
                 !task.subject ||
                 !task.html
             ) {
-                console.error('bad email task. Madatory field not provided. Got', JSON.stringify(task));
+                console.error('bad email task. Mandatory field not provided. Got', JSON.stringify(task));
                 ctx.status = 200; // we return 200 so Google task will not dispatch this bad task again
                 ctx.body = JSON.stringify({status: "bad email task"})
+                return;
             }
+            task.text = task.text || htmlToText.fromString(task.html);
             const { status, text } = await mailerSend(task.from, task.to, task.replyTo, task.subject, task.html, task.text)
             ctx.status = status;
             ctx.body = JSON.stringify({message: text});
@@ -68,7 +79,7 @@ async function mailerSend(from, to, replyTo, subject, html, text ) {
         headers
     };
 
-    console.log('Calling mailersend', url, JSON.stringify(requestOptions, null, 2))
+    console.log('Calling mailersend')
     return fetch(url, requestOptions)
         .then(async response => {
             console.log('status is-ok + code from mailersend', response.ok, response.status)
@@ -81,7 +92,7 @@ async function mailerSend(from, to, replyTo, subject, html, text ) {
             return {status, text};
         })
         .catch(error => {
-            console.error('error (e77)', error)
+            console.error('error (e77)', error, url, JSON.stringify(requestOptions, null, 2))
             return {status: 500, text: 'error (e77):' + error.message}
         });
 }
