@@ -9,7 +9,6 @@ export function emailTasks ({ }) {
             // req keys = ["body","headers","host","hostname","href","json","method","origin","path","protocol","query","querystring","search","text"]
             // console.log('headers', JSON.stringify(req.headers));
             const t = await req.text();
-            console.log('body is', t);
             const tt = JSON.parse(t);
             console.log('t is parsed. tt keys=', Object.keys(tt));
             if (!tt.requestOptions && !tt.requestOptions.body) {

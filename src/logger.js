@@ -75,7 +75,7 @@ class Logger {
      * @param {string} message
      */
     info(...message) {
-        this._log(message);
+        this._log.apply(this, message);
         this.addLog(message.map(i => typeof i === 'object' ? JSON.stringify(i) : i).join(' ; '), 'INFO')
     }
 
@@ -84,7 +84,7 @@ class Logger {
      * @param {string} message
      */
     debug(...message) {
-        this._log(message);
+        this._log.apply(this, message);
         this.addLog(message.map(i => typeof i === 'object' ? JSON.stringify(i) : i).join(' ; '), 'DEBUG')
     }
 
@@ -93,7 +93,7 @@ class Logger {
      * @param {string} message
      */
     error(...message) {
-        this._log(message);
+        this._log.apply(this, message);
         this.addLog(message.map(i => typeof i === 'object' ? JSON.stringify(i) : i).join(' ; '), 'ERROR')
     }
 
